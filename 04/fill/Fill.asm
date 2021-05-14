@@ -14,33 +14,32 @@
 // Put your code here.
 (INIT)
     @SCREEN
-    D=A      // D <- SCREEN
-    @addr    // 塗りつぶしたいSCREEN上のワード
-    M=D      // SCREEN
+    D=A
+    @addr
+    M=D
 
-    // if(KBD > 0...pressed) goto PRESS
     @KBD
     D=M
     @PRESS
     D;JGT
     @ELSE
     0;JMP
-(PRESS) //color select
+(PRESS)
     @color
-    M=-1     // color=-1 black
+    M=-1
     @ENDIF
     0;JMP
-(ELSE) //color select
+(ELSE)
     @color
-    M=0      // color=0 白
+    M=0
 (ENDIF)
 
-(LOOP)      
+(LOOP)
     @color
-    D=M      // D <- color
+    D=M
     @addr
     A=M
-    M=D      // *addr <- color
+    M=D
     @addr
     M=M+1
 
@@ -49,13 +48,10 @@
     @SCREEN
     D=D+A
     @addr
-    D=D-M  // D= 8192 + SCREEN - addr
-    // 塗り残しがあれば塗りつぶすまで続ける
+    D=D-M
     @LOOP
     D;JGT
 
-    // 全部塗り終わったら、最初に戻る
+
     @INIT
     0;JMP
-
-// このプログラムは永久に終了しない
